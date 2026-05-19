@@ -287,7 +287,9 @@ export function PolicyDetailPage() {
                       .join(" ")}
                   </div>
                   <div className="text-white/75 text-sm font-medium mt-0.5">
-                    {policy.provider}
+                    {policy.vehicle_number
+                      ? `Reg No. ${policy.vehicle_number}`
+                      : policy.provider}
                   </div>
                 </>
               ) : (
@@ -295,31 +297,13 @@ export function PolicyDetailPage() {
                   {policy.provider}
                 </div>
               )}
-              <div
-                className={`mt-3 rounded-xl border border-white/20 bg-white/10 backdrop-blur-sm p-2.5 grid gap-2 ${
-                  policy.policy_type === "motor" && policy.vehicle_number
-                    ? "grid-cols-2"
-                    : "grid-cols-1 max-w-[210px]"
-                }`}
-              >
-                <div className="rounded-lg bg-white/12 border border-white/20 px-2.5 py-2 min-w-0">
-                  <div className="text-[10px] uppercase tracking-wider text-white/70 font-semibold">
-                    Policy Number
-                  </div>
-                  <div className="text-white text-[13px] leading-tight font-mono font-bold tracking-wider mt-1 truncate">
-                    {policy.policy_number}
-                  </div>
-                </div>
-                {policy.policy_type === "motor" && policy.vehicle_number && (
-                  <div className="rounded-lg bg-[#7C79C8]/35 border border-white/15 px-2.5 py-2 min-w-0">
-                    <div className="text-[10px] uppercase tracking-wider text-white/70 font-semibold">
-                      Registration
-                    </div>
-                    <div className="text-white text-[13px] leading-tight font-bold tracking-widest mt-1 truncate">
-                      {policy.vehicle_number}
-                    </div>
-                  </div>
-                )}
+              <div className="inline-flex items-center gap-2 mt-3 bg-white/15 border border-white/25 rounded-lg px-3 py-1.5">
+                <span className="text-[10px] uppercase tracking-wider text-white/70 font-semibold">
+                  Policy No
+                </span>
+                <span className="text-white text-sm font-mono font-bold tracking-wider">
+                  {policy.policy_number}
+                </span>
               </div>
             </div>
             <div className="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center">
@@ -379,12 +363,6 @@ export function PolicyDetailPage() {
                 {formatDate(policy.end_date)}
               </div>
             </div>
-            <div className="col-span-2 border-t border-[#EAE8F8] pt-3">
-              <div className="text-xs text-[#7878A8]">Policy Number</div>
-              <div className="font-semibold text-sm text-[#313057] mt-0.5">
-                {policy.policy_number}
-              </div>
-            </div>
             {policy.additional_policyholder ? (
               <div className="col-span-2">
                 <div className="text-xs text-[#7878A8]">
@@ -401,34 +379,6 @@ export function PolicyDetailPage() {
         {/* Premium & Excess (motor only) */}
         {policy.policy_type === "motor" && policy.vehicle_make && (
           <>
-            {/* Vehicle Details */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.05 }}
-            >
-              <Card className="p-4">
-                <h3 className="font-bold text-[#313057] text-sm mb-3 flex items-center gap-2">
-                  <Car className="w-4 h-4" /> Vehicle Details
-                </h3>
-                <div className="grid grid-cols-2 gap-3">
-                  {[
-                    { label: "Registration", value: policy.vehicle_number },
-                    { label: "Make", value: policy.vehicle_make },
-                    { label: "Model", value: policy.vehicle_model },
-                    { label: "Year", value: String(policy.vehicle_year) },
-                  ].map(({ label, value }) => (
-                    <div key={label}>
-                      <div className="text-xs text-[#7878A8]">{label}</div>
-                      <div className="text-sm font-semibold text-[#313057] mt-0.5">
-                        {value}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </Card>
-            </motion.div>
-
             {/* Premium & Excess */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}

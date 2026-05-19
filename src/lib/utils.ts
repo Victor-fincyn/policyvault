@@ -55,15 +55,15 @@ export function getStatusLabel(status: PolicyStatus): string {
 export function getTypeIcon(type: PolicyType): string {
   switch (type) {
     case "motor":
-      return "🚗";
+      return "�";
     case "health":
-      return "❤️";
+      return "🩺";
     case "life":
-      return "🌿";
+      return "🛡️";
     case "home":
-      return "🏠";
+      return "🏡";
     case "travel":
-      return "✈️";
+      return "🌍";
   }
 }
 

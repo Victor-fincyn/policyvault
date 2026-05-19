@@ -1,12 +1,27 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { SlidersHorizontal } from "lucide-react";
+import {
+  SlidersHorizontal,
+  Car,
+  Heart,
+  Shield,
+  Home,
+  Plane,
+} from "lucide-react";
 import { mockPolicies } from "@/data/mockData";
 import { PolicyCard } from "@/components/PolicyCard";
 import { SearchInput } from "@/components/ui/SearchInput";
-import { cn, getTypeIcon, getTypeLabel } from "@/lib/utils";
+import { cn, getTypeLabel } from "@/lib/utils";
 import type { PolicyType } from "@/types/policy";
+
+const TYPE_ICONS: Record<PolicyType, React.ReactNode> = {
+  motor: <Car className="w-3.5 h-3.5" />,
+  health: <Heart className="w-3.5 h-3.5" />,
+  life: <Shield className="w-3.5 h-3.5" />,
+  home: <Home className="w-3.5 h-3.5" />,
+  travel: <Plane className="w-3.5 h-3.5" />,
+};
 
 const TYPES: (PolicyType | "all")[] = [
   "all",
@@ -42,9 +57,7 @@ export function PoliciesPage() {
       <div className="bg-white border-b border-[#C8C7E8] px-4 pt-12 pb-3 sticky top-0 z-30">
         <div className="max-w-lg mx-auto">
           <div className="flex items-center justify-between mb-3">
-            <h1 className="text-xl font-bold text-[#313057]">
-              My Policies
-            </h1>
+            <h1 className="text-xl font-bold text-[#313057]">My Policies</h1>
             <button className="w-9 h-9 flex items-center justify-center rounded-xl bg-[#ECEAFB]">
               <SlidersHorizontal className="w-4 h-4 text-[#4D4B80]" />
             </button>
@@ -70,7 +83,9 @@ export function PoliciesPage() {
                 )}
               >
                 {type !== "all" && (
-                  <span>{getTypeIcon(type as PolicyType)}</span>
+                  <span className="flex items-center">
+                    {TYPE_ICONS[type as PolicyType]}
+                  </span>
                 )}
                 <span>
                   {type === "all" ? "All" : getTypeLabel(type as PolicyType)}
